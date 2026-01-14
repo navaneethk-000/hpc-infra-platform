@@ -3,12 +3,10 @@ import { useAuthStore } from "~/stores/auth";
 
 const authStore = useAuthStore();
 
-// USE THE NEW LAYOUT
 definePageMeta({
   layout: "profile-layout",
 });
 
-// Name Logic
 const fullDisplayName = computed(() => {
   if (authStore.user?.name) return authStore.user.name;
   const email = authStore.user?.email || "";
@@ -26,20 +24,12 @@ const lastName = computed(() => {
 </script>
 
 <template>
-  <div>
-    <h1 class="text-xl font-bold mb-8">Profile</h1>
+  <div class="w-full">
+    <h1 class="text-xl font-bold mb-8">Settings</h1>
 
-    <!-- Avatar -->
-    <div class="mb-10">
-      <div
-        class="w-20 h-20 rounded-full bg-[#BDBDBD] flex items-center justify-center text-3xl text-gray-700 font-medium select-none"
-      >
-        {{ authStore.user?.email?.charAt(0).toUpperCase() }}
-      </div>
-    </div>
-
-    <!-- Form Fields -->
-    <div class="max-w-2xl space-y-6">
+    <!-- User details-->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+      <!-- First Name -->
       <div class="space-y-2">
         <label class="block text-xs text-gray-400 font-medium ml-1"
           >First name</label
@@ -51,6 +41,7 @@ const lastName = computed(() => {
         </div>
       </div>
 
+      <!-- Last Name -->
       <div class="space-y-2">
         <label class="block text-xs text-gray-400 font-medium ml-1"
           >Last name</label
@@ -62,9 +53,10 @@ const lastName = computed(() => {
         </div>
       </div>
 
+      <!-- Email -->
       <div class="space-y-2">
         <label class="block text-xs text-gray-400 font-medium ml-1"
-          >Email id</label
+          >Email</label
         >
         <div
           class="bg-[#161b22] border border-gray-800 rounded-md px-4 py-3 text-sm font-semibold text-gray-200"
@@ -73,6 +65,7 @@ const lastName = computed(() => {
         </div>
       </div>
 
+      <!-- Role -->
       <div class="space-y-2">
         <label class="block text-xs text-gray-400 font-medium ml-1">Role</label>
         <div
@@ -81,6 +74,22 @@ const lastName = computed(() => {
           {{ authStore.user?.role?.replace("_", " ") }}
         </div>
       </div>
+    </div>
+
+    <!-- API KEYS SECTION -->
+    <div class="bg-[#161b22] border border-gray-800 rounded-lg p-6">
+      <!-- Header -->
+      <div class="flex items-center justify-between mb-6">
+        <h2 class="text-lg font-bold text-gray-200">API Keys</h2>
+        <button
+          class="bg-[#4679E5] hover:bg-blue-600 text-white text-sm font-medium px-4 py-2 rounded-md transition-colors flex items-center gap-2"
+        >
+          <span>+</span> Add Key
+        </button>
+      </div>
+
+      <!-- Content (Empty State) -->
+      <div class="text-gray-500 text-sm">No API keys are available</div>
     </div>
   </div>
 </template>

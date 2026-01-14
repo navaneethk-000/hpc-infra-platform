@@ -7,7 +7,7 @@
       <!-- Sidebar Component -->
       <AdminSidebar />
 
-      <main class="flex-1 overflow-y-auto bg-[#0f111a]">
+      <main class="flex-1 overflow-y-auto bg-[#0f111a] no-scrollbar">
         <slot />
       </main>
     </div>
