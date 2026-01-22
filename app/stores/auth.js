@@ -1,53 +1,88 @@
-import { defineStore } from 'pinia';
+import { defineStore } from "pinia";
 
-export const useAuthStore = defineStore('auth', () => {
-  // Use cookies to ensure data survives page refreshes
-  const token = useCookie('token'); 
-  const user = useCookie('user'); 
+export const useAuthStore = defineStore("auth", () => {
+  // 1. CONFIG: Cookies accessible everywhere, 7-day expiry
+  const cookieOptions = {
+    path: "/",
+    maxAge: 60 * 60 * 24 * 7, // 1 week
+    sameSite: "lax",
+  };
 
+  const token = useCookie("token", cookieOptions);
+  const user = useCookie("user", cookieOptions);
+
+  // --- LOGIN ACTION ---
   async function login(email, password) {
     try {
-      const response = await $fetch("https://tenant.hpcinfra.com/api/auth/login", {
-        method: "POST",
-        body: { email, password },
-      });
+      // Use PROXY URL to avoid CORS errors
+      const response = await $fetch(
+        "https://tenant.hpcinfra.com/api/auth/login",
+        {
+          method: "POST",
+          body: { email, password },
+        },
+      );
 
-      console.log("API Response:", response); // Debugging
+      // 2. TOKEN EXTRACTION LOGIC
+      let rawToken =
+        response.token || response.accessToken || response.data?.token;
 
-      token.value = response.token; 
-      
-      const backendRole = response.user?.role || 'DEVELOPER';
+      // Extract string if it's an object (e.g. { AccessToken: "..." })
+      if (rawToken && typeof rawToken === "object" && rawToken.AccessToken) {
+        rawToken = rawToken.AccessToken;
+      }
+
+      // Final validation
+      if (!rawToken || typeof rawToken !== "string") {
+        throw new Error(
+          "Could not extract a valid Token string from response.",
+        );
+      }
+
+      // 3. Save STRING to Cookie
+      token.value = rawToken;
+
+      // 4. Map Roles
+      const backendRole = response.user?.role || "DEVELOPER";
       const appRole = mapRole(backendRole);
 
       user.value = {
         ...response.user,
-        role: appRole
+        role: appRole,
       };
 
-      // Redirect
-      if (appRole === 'IT_MANAGER') return navigateTo('/admin/dashboard');
-      if (appRole === 'CAD_MANAGER') return navigateTo('/cad/dashboard');
-      return navigateTo('/developer/dashboard');
+      // Force update before redirect
+      await nextTick();
 
+      // 5. Redirect
+      if (appRole === "IT_MANAGER") return navigateTo("/admin/dashboard");
+      if (appRole === "CAD_MANAGER") return navigateTo("/cad/dashboard");
+      return navigateTo("/developer/dashboard");
     } catch (error) {
       console.error("Login Failed:", error);
-      throw error; // Pass error to component to show "Invalid Credentials"
+      throw error;
     }
   }
 
-  // --- LOGOUT ---
-  function logout() {
+  // --- LOGOUT ACTION (FIXED) ---
+  function logout(sessionExpired = false) {
+    // 1. Clear State
     token.value = null;
     user.value = null;
-    return navigateTo('/');
+
+    // 2. Determine destination
+    const path = sessionExpired ? "/?expired=true" : "/";
+
+    // 3. Instant Redirect (No page reload)
+    return navigateTo(path, { replace: true });
   }
 
-  // Map Backend Roles to Frontend Roles
+  // --- HELPER: Role Mapping ---
   function mapRole(role) {
-    const r = role ? role.toString().toUpperCase() : '';
-    if (r.includes('ADMIN') || r === 'IT_MANAGER') return 'IT_MANAGER';
-    if (r.includes('CAD') || r === 'CAD_MANAGER') return 'CAD_MANAGER';
-    return 'DEVELOPER';
+    const r = role ? role.toString().toUpperCase() : "";
+    if (r.includes("ADMIN") || r === "IT_MANAGER") return "IT_MANAGER";
+    if (r.includes("CAD") || r === "CAD_MANAGER") return "CAD_MANAGER";
+    return "DEVELOPER";
   }
 
   return { user, token, login, logout };

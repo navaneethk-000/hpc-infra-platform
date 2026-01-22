@@ -6,7 +6,7 @@ export default defineNuxtConfig({
         {
           rel: "icon",
           type: "image/x-icon",
-          href: "favicon-hpcinfra.svg",
+          href: "/favicon-hpcinfra.svg",
         },
       ],
     },
@@ -17,9 +17,9 @@ export default defineNuxtConfig({
   modules: ["@nuxtjs/tailwindcss", "@pinia/nuxt", "@vesp/nuxt-fontawesome"],
   fontawesome: {
     icons: {
-      solid: ['cog'],
-    
-    }},
+      solid: ["cog"],
+    },
+  },
   tailwindcss: {
     exposeConfig: true,
     viewer: true,
@@ -28,7 +28,7 @@ export default defineNuxtConfig({
     "/home/navaneeth/hpc-infra-platform/app/assets/main.css",
     "@fortawesome/fontawesome-svg-core/styles.css",
   ],
-  
+
   plugins: [
     "/home/navaneeth/hpc_infra_platform/hpc_infra_platform/plugins/fontawesome.js", // register the plugin
   ],

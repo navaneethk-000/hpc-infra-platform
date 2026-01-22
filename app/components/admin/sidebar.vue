@@ -2,7 +2,7 @@
   <aside
     class="w-20 bg-[#161b22] border-r border-gray-800 flex flex-col items-center py-6 gap-8 shrink-0 h-full"
   >
-    <!-- 1. Resource Utilization Link -->
+    <!-- Resource Utilization Link -->
     <NuxtLink to="/admin/dashboard" custom v-slot="{ navigate, isActive }">
       <div
         @click="navigate"

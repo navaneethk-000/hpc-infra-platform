@@ -1,4 +1,6 @@
 <script setup>
+import CreditUtilisation from "~/components/cad/CreditUtilisation.vue";
+
 definePageMeta({ layout: "cad-manager" });
 </script>
 

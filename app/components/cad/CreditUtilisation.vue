@@ -1,8 +1,10 @@
 <template>
-  <div class="bg-[#1a1f2b] rounded-lg p-6 border border-gray-700 shadow-lg mt-6 relative overflow-hidden">
+  <div
+    class="bg-[#1a1f2b] rounded-lg p-6 border border-gray-700 shadow-lg mt-6 relative overflow-hidden"
+  >
     <!-- Decorative Background Image Placeholder -->
     <div class="absolute right-0 top-0 opacity-10">
-       <div class="w-64 h-64 bg-blue-500 rounded-full blur-3xl"></div>
+      <div class="w-64 h-64 bg-blue-500 rounded-full blur-3xl"></div>
     </div>
 
     <h2 class="text-xl text-gray-300 font-bold mb-6 relative z-10">

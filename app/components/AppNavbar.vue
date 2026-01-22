@@ -49,7 +49,13 @@ onUnmounted(() => document.removeEventListener("click", handleClickOutside));
     <!-- Left: Logo & Menu -->
     <div class="flex items-center gap-8">
       <div class="flex gap-2 items-center">
-        <img src="/images/hpc_logo.png" alt="logo" class="h-auto w-[150px]" />
+        <nuxt-link to="/">
+          <img
+            src="/images/hpc_logo.png"
+            alt="logo"
+            class="h-auto w-[200px] cursor-pointer"
+          />
+        </nuxt-link>
         <!-- Role Badge -->
         <span
           class="text-[10px] bg-purple-600 text-white px-2 py-0.5 rounded font-bold uppercase"
@@ -79,7 +85,6 @@ onUnmounted(() => document.removeEventListener("click", handleClickOutside));
 
     <!-- Right: Icons & Avatar -->
     <div class="flex gap-5 items-center text-gray-300">
-      <!-- Admin sees specific icons, others see default -->
       <template v-if="isITManager">
         <div
           class="w-8 h-8 flex items-center justify-center border border-gray-600 rounded-full text-gray-400 cursor-pointer"

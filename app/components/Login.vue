@@ -1,6 +1,5 @@
-
 <script setup>
-import { useAuthStore } from "~/stores/auth"; 
+import { useAuthStore } from "~/stores/auth";
 
 const error = ref(null);
 const authStore = useAuthStore();
@@ -25,7 +24,6 @@ async function submitForm() {
 
   try {
     await authStore.login(form.email, form.password);
-    
   } catch (err) {
     if (err.response?.status === 401) {
       error.value = err.response._data?.message || "Invalid email or password";
@@ -41,8 +39,8 @@ async function submitForm() {
     <div class="w-[300px]">
       <form class="flex flex-col gap-2" @submit.prevent="submitForm">
         <h1 class="text-3xl font-bold mb-1">Sign in to HPC Infra</h1>
-        
-        <label for="email"class="text-sm font-medium">Your work email</label>
+
+        <label for="email" class="text-sm font-medium">Your work email</label>
         <input
           type="email"
           name="email"
@@ -51,7 +49,7 @@ async function submitForm() {
           class="bg-transparent border mb-2 border-solid rounded-md px-4 py-2 outline-none focus:border-blue-500"
           v-model="form.email"
         />
-        
+
         <label for="password" class="text-sm font-medium">Password</label>
         <input
           type="password"
@@ -70,8 +68,11 @@ async function submitForm() {
           <input type="checkbox" name="remember" id="remember" />
           <label for="remember">Remember me</label>
         </div>
-        
-        <button type="submit" class="bg-[#4679E5] font-bold hover:bg-blue-600 transition-colors rounded-md p-2 mt-2 text-sm ">
+
+        <button
+          type="submit"
+          class="bg-[#4679E5] font-bold hover:bg-blue-600 transition-colors rounded-md p-2 mt-2 text-sm"
+        >
           Sign in
         </button>
       </form>
