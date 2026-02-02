@@ -15,6 +15,11 @@ export default defineNuxtConfig({
   compatibilityDate: "2025-07-15",
   devtools: { enabled: true },
   modules: ["@nuxtjs/tailwindcss", "@pinia/nuxt", "@vesp/nuxt-fontawesome"],
+  routeRules: {
+    "/proxy-api/**": {
+      proxy: "https://tenant.hpcinfra.com/api/**",
+    },
+  },
   fontawesome: {
     icons: {
       solid: ["cog"],
