@@ -9,7 +9,7 @@ definePageMeta({
     class="min-h-screen flex flex-col md:flex-row bg-[#0f111a] text-white w-full"
   >
     <div
-      class="md:w-1/2 bg-cover bg-center flex items-end justify-end relative overflow-hidden bg-[url('/home/navaneeth/hpc-infra-platform/public/images/bg-login.png')] rotate-180 inset-0"
+      class="md:w-1/2 bg-cover bg-center flex items-end justify-end relative overflow-hidden bg-[url('/images/bg-login.png')] rotate-180 inset-0"
     >
       <div class="p-12 flex flex-col gap-4 z-20 rotate-180">
         <img

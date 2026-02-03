@@ -29,12 +29,13 @@ export default defineNuxtConfig({
     exposeConfig: true,
     viewer: true,
   },
+
   css: [
-    "/home/navaneeth/hpc-infra-platform/app/assets/main.css",
+    "./assets/main.css", // Changed to relative path
     "@fortawesome/fontawesome-svg-core/styles.css",
   ],
 
   plugins: [
-    "/home/navaneeth/hpc_infra_platform/hpc_infra_platform/plugins/fontawesome.js", // register the plugin
+    "./plugins/fontawesome.js", // Changed to relative path
   ],
 });
